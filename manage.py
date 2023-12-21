@@ -6,8 +6,17 @@ from utils.environments import Environment
 import os
 
 
-app = FastAPI(title='ScannerAPI')
 load_dotenv()
+
+title = os.getenv('APP_TITLE', 'ScannerAPI')
+root_path = os.getenv('APP_PREFIX', '')
+
+app = FastAPI(
+        title = title,
+        root_path = root_path,
+        openapi_prefix = root_path
+    )
+
 env = os.getenv('ENVIRONMENT', Environment.DEV)
 # Disable open API if PROD
 if env == Environment.PROD:
@@ -27,7 +36,3 @@ app.add_middleware(
 # Router based on directory
 api_routers = DirectoryRouter(base_directory='routes')
 app.include_router(router=api_routers)
-
-
-# if __name__ == "__main__":
-#     uvicorn.run(app, host="0.0.0.0", port=9000)

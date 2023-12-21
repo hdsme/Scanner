@@ -10,3 +10,5 @@ services:
     restart: unless-stopped
     environment:
       - ENVIRONMENT=Development
+      - APP_TITLE=ScannerAPI
+      - APP_PREFIX=''
